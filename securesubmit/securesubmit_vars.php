@@ -104,7 +104,7 @@ function espresso_display_securesubmit($payment_data) {
 				<input name="securesubmit" type="hidden" value="true" />
 				<input name="id" type="hidden" value="<?php echo $attendee_id ?>" />
 				<p class="event_form_submit">
-					<input name="securesubmit_submit" id="securesubmit_submit" class="submit-payment-btn" type="submit" value="<?php _e('Complete Purchase', 'event_espresso'); ?>" />
+					<input name="securesubmit_submit" id="securesubmit_submit" class="submit-payment-btn allow-leave-page" type="submit" value="<?php _e('Complete Purchase', 'event_espresso'); ?>" />
 				</p>
 			</form>
             <div>
