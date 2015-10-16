@@ -1,5 +1,5 @@
 <?php
-if(!class_exists("HpsConfiguration")) {
+if(!class_exists("HpsServicesConfig")) {
 	require_once (dirname(__FILE__).'/lib/Hps.php');
 }
 
@@ -14,7 +14,7 @@ class Espresso_ClsSecureSubmit
         $currencySymbol = $securesubmit_settings['securesubmit_currency_symbol'];
 		
 		$response = null;
-        $config = new HpsConfiguration();
+        $config = new HpsServicesConfig();
         $config->secretApiKey = $secretKey;
         $config->versionNumber = '1741';
         $config->developerId = '002914';
