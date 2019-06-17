@@ -65,11 +65,11 @@ function espresso_display_securesubmit($payment_data) {
 					<h4 class="section-title"><?php _e('Credit Card Information', 'event_espresso'); ?></h4>
 					<p>
 						<label for="card_num"><?php _e('Card Number', 'event_espresso'); ?></label>
-						<input type="text" class="<?php echo (!$securesubmit_settings['securesubmit_enable_giftcard'] ? "required" : "");?>" id="card_number" />
+						<input type="text" class="required" id="card_number" />
 					</p>
 					<p>
 						<label for="card-exp"><?php _e('Expiration Month', 'event_espresso'); ?></label>
-						<select id="exp_month" class="<?php echo (!$securesubmit_settings['securesubmit_enable_giftcard'] ? "required" : "");?>">
+						<select id="exp_month" class="required">
 							<?php
 							$curr_month = date("m");
 							for ($i = 1; $i < 13; $i++) {
@@ -85,7 +85,7 @@ function espresso_display_securesubmit($payment_data) {
 					</p>
 					<p>
 						<label for="exp-year"><?php _e('Expiration Year', 'event_espresso'); ?></label>
-						<select id="exp_year" class="<?php echo (!$securesubmit_settings['securesubmit_enable_giftcard'] ? "required" : "");?>">
+						<select id="exp_year" class="required">
 							<?php
 							$curr_year = date("Y");
 							for ($i = 0; $i < 10; $i++) {
@@ -98,7 +98,7 @@ function espresso_display_securesubmit($payment_data) {
 					</p>
 					<p>
 						<label for="cvv"><?php _e('CVC Code', 'event_espresso'); ?></label>
-						<input type="text" id="card_cvc" class="<?php echo (!$securesubmit_settings['securesubmit_enable_giftcard'] ? "required" : "");?>" />
+						<input type="text" id="card_cvc" class="required" />
 					</p>
 				</fieldset>
 				

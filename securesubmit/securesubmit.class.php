@@ -48,11 +48,33 @@ class Espresso_ClsSecureSubmit
 						$giftCard->pin = $gcPin;
 					}
 					
-					$response = $gcService->sale($giftCard, $amount, 'usd');
-					
-					$result["status"] = 1;
-					$result["msg"] = "Transaction was completed successfully [Transaction ID# ".$response->transactionId."]";
-					$result['txid'] = $response->transactionId;
+					$response = $gcService->balance($giftCard);
+					$balanceAmount = $response->balanceAmount;
+					if($balanceAmount >= $amount){
+						$response = $gcService->sale($giftCard, $amount, 'usd');
+						
+						$result["status"] = 1;
+						$result["msg"] = "Transaction was completed successfully [Transaction ID# ".$response->transactionId."]";
+						$result['txid'] = $response->transactionId;
+					}else{
+						// Charge the full balance amount since it's less than the price of the item
+						$gcResponse = $gcService->sale($giftCard, $balanceAmount, 'usd');
+						try {
+							// Now charge the credit card for the rest of the value
+							$creditService = new HpsCreditService($config);
+							$response = $creditService->charge(($amount - $balanceAmount),'usd',$token,$cardHolder);
+
+							$result["status"] = 1;
+							$result["msg"] = "Transaction was completed successfully [Gift Card Transaction ID# " . $gcResponse->transactionId . " - Credit Card Transaction ID# ".$response->transactionId."]";
+							$result['txid'] = $response->transactionId;
+						}catch (Exception $e) {
+							$result["status"] = 0;
+							$result["error_msg"] = $e->getMessage();
+								
+							// Credit card payment failed, so reverse the charge done to the card
+							$gcResponse = $gcService->reverse($giftCard, $balanceAmount, 'usd');
+						}
+					}
 				}catch (Exception $e) {
 					$result["status"] = 0;
 					$result["error_msg"] = $e->getMessage();
