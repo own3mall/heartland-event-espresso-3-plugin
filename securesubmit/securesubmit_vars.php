@@ -60,15 +60,16 @@ function espresso_display_securesubmit($payment_data) {
 					</p>
 				</fieldset>
 
+				<hr />
 				<fieldset id="securesubmit-credit-card-info-dv">
 					<h4 class="section-title"><?php _e('Credit Card Information', 'event_espresso'); ?></h4>
 					<p>
 						<label for="card_num"><?php _e('Card Number', 'event_espresso'); ?></label>
-						<input type="text" class="required" id="card_number" />
+						<input type="text" class="<?php echo (!$securesubmit_settings['securesubmit_enable_giftcard'] ? "required" : "");?>" id="card_number" />
 					</p>
 					<p>
 						<label for="card-exp"><?php _e('Expiration Month', 'event_espresso'); ?></label>
-						<select id="exp_month" class="required">
+						<select id="exp_month" class="<?php echo (!$securesubmit_settings['securesubmit_enable_giftcard'] ? "required" : "");?>">
 							<?php
 							$curr_month = date("m");
 							for ($i = 1; $i < 13; $i++) {
@@ -84,7 +85,7 @@ function espresso_display_securesubmit($payment_data) {
 					</p>
 					<p>
 						<label for="exp-year"><?php _e('Expiration Year', 'event_espresso'); ?></label>
-						<select id="exp_year" class="required">
+						<select id="exp_year" class="<?php echo (!$securesubmit_settings['securesubmit_enable_giftcard'] ? "required" : "");?>">
 							<?php
 							$curr_year = date("Y");
 							for ($i = 0; $i < 10; $i++) {
@@ -97,7 +98,7 @@ function espresso_display_securesubmit($payment_data) {
 					</p>
 					<p>
 						<label for="cvv"><?php _e('CVC Code', 'event_espresso'); ?></label>
-						<input type="text" id="card_cvc"/>
+						<input type="text" id="card_cvc" class="<?php echo (!$securesubmit_settings['securesubmit_enable_giftcard'] ? "required" : "");?>" />
 					</p>
 				</fieldset>
 				
@@ -105,7 +106,7 @@ function espresso_display_securesubmit($payment_data) {
 			if ($securesubmit_settings['securesubmit_enable_giftcard']) {	
 			?>
 				<hr />
-				<fieldset>
+				<fieldset id="securesubmit_giftcard_info">
 					<h4 class="section-title"><?php _e('Gift Card Information', 'event_espresso'); ?></h4>
 					<p>
 						<label for="securesubmit_giftcardnumber"><?php _e('Gift Card Number', 'event_espresso'); ?></label>
