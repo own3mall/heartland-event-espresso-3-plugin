@@ -48,8 +48,13 @@ class Espresso_ClsSecureSubmit
 						$giftCard->pin = $gcPin;
 					}
 					
+					// Get balance on the gift card
 					$response = $gcService->balance($giftCard);
 					$balanceAmount = $response->balanceAmount;
+					if($balanceAmount < 0){
+						$balanceAmount = 0;
+					}
+					
 					if($balanceAmount >= $amount){
 						$response = $gcService->sale($giftCard, $amount, 'usd');
 						
@@ -58,7 +63,12 @@ class Espresso_ClsSecureSubmit
 						$result['txid'] = $response->transactionId;
 					}else{
 						// Charge the full balance amount since it's less than the price of the item
-						$gcResponse = $gcService->sale($giftCard, $balanceAmount, 'usd');
+						$chargedGiftCard = false;
+						if($balanceAmount > 0){						
+							$gcResponse = $gcService->sale($giftCard, $balanceAmount, 'usd');
+							$chargedGiftCard = true;
+						}
+						
 						try {
 							// Now charge the credit card for the rest of the value
 							$creditService = new HpsCreditService($config);
@@ -72,7 +82,9 @@ class Espresso_ClsSecureSubmit
 							$result["error_msg"] = $e->getMessage();
 								
 							// Credit card payment failed, so reverse the charge done to the card
-							$gcResponse = $gcService->reverse($giftCard, $balanceAmount, 'usd');
+							if($chargedGiftCard){
+								$gcResponse = $gcService->reverse($giftCard, $balanceAmount, 'usd');
+							}
 						}
 					}
 				}catch (Exception $e) {
