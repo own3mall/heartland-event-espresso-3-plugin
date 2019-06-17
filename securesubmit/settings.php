@@ -132,7 +132,7 @@ function event_espresso_display_securesubmit_settings() {
             <?php _e('SecureSubmit Enable Gift Cards', 'event_espresso'); ?>
         </h2>
         <p>
-            <?php _e('Check the box to support accepting SecureSubit gift cards.', 'event_espresso'); ?>
+            <?php _e('Check the box to support accepting SecureSubmit gift cards.', 'event_espresso'); ?>
         </p>
     </div>
 <?php
