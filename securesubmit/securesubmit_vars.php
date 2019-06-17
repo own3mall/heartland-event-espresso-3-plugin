@@ -100,6 +100,25 @@ function espresso_display_securesubmit($payment_data) {
 						<input type="text" id="card_cvc"/>
 					</p>
 				</fieldset>
+				
+			<?php
+			if ($securesubmit_settings['securesubmit_enable_giftcard']) {	
+			?>
+				<hr />
+				<fieldset>
+					<h4 class="section-title"><?php _e('Gift Card Information', 'event_espresso'); ?></h4>
+					<p>
+						<label for="securesubmit_giftcardnumber"><?php _e('Gift Card Number', 'event_espresso'); ?></label>
+						<input name="securesubmit_giftcardnumber" type="text" id="securesubmit_giftcardnumber" value="<?php echo $securesubmit_giftcardnumber; ?>" />
+					</p>
+					<p>
+						<label for="securesubmit_giftcardpin"><?php _e('Gift Card PIN', 'event_espresso'); ?></label>
+						<input name="securesubmit_giftcardpin" type="text" id="securesubmit_giftcardpin" value="<?php echo $securesubmit_giftcardpin; ?>" />
+					</p>
+				</fieldset>
+			<?php
+			}
+			?>
 				<input name="amount" type="hidden" value="<?php echo number_format($event_cost, 2) ?>" />
 				<input name="securesubmit" type="hidden" value="true" />
 				<input name="id" type="hidden" value="<?php echo $attendee_id ?>" />

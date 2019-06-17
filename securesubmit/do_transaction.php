@@ -36,7 +36,7 @@ function espresso_process_securesubmit($payment_data) {
     $cardHolder->email = $_POST['email'];
     $cardHolder->address = $address;
 
-	$response = $cls_securesubmit->do_transaction($payment_data['total_cost'], $token_value, $cardHolder, $line_item);
+	$response = $cls_securesubmit->do_transaction($payment_data['total_cost'], $token_value, $cardHolder, $line_item, $securesubmit_settings);
 	if (!empty($response)) {
 		$payment_data['txn_details'] = serialize($response->transactionId);
 		if (isset($response['status'])) {

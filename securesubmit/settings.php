@@ -7,6 +7,7 @@ function event_espresso_securesubmit_payment_settings() {
         $securesubmit_settings['securesubmit_public_key'] = $_POST['securesubmit_public_key'];
         $securesubmit_settings['securesubmit_secret_key'] = $_POST['securesubmit_secret_key'];
         $securesubmit_settings['securesubmit_currency_symbol'] = $_POST['securesubmit_currency_symbol'];
+        $securesubmit_settings['securesubmit_enable_giftcard'] = array_key_exists("securesubmit_enable_giftcard", $_POST) ? $_POST['securesubmit_enable_giftcard'] : 0;
         $securesubmit_settings['header'] = $_POST['header'];
         $securesubmit_settings['force_ssl_return'] = empty($_POST['force_ssl_return']) ? false : true;
         $securesubmit_settings['display_header'] = empty($_POST['display_header']) ? false : true;
@@ -18,6 +19,7 @@ function event_espresso_securesubmit_payment_settings() {
         $securesubmit_settings['securesubmit_public_key'] = '';
         $securesubmit_settings['securesubmit_secret_key'] = '';
         $securesubmit_settings['securesubmit_currency_symbol'] = 'usd';
+        $securesubmit_settings['securesubmit_enable_giftcard'] = 0;
         $securesubmit_settings['header'] = 'Payment Transactions by SecureSubmit';
         $securesubmit_settings['force_ssl_return'] = false;
         $securesubmit_settings['display_header'] = false;
@@ -90,6 +92,12 @@ function event_espresso_display_securesubmit_settings() {
                             </label>
                             <input type="text" name="securesubmit_secret_key" size="35" value="<?php echo $securesubmit_settings['securesubmit_secret_key']; ?>">
                         </li>
+                        <li>
+                            <label for="securesubmit_enable_giftcard">
+                                <?php _e('SecureSubmit Enable Gift Cards', 'event_espresso'); ?> <a class="thickbox" href="#TB_inline?height=300&width=400&inlineId=securesubmit_enable_giftcard"><img src="<?php echo EVENT_ESPRESSO_PLUGINFULLURL ?>/images/question-frame.png" width="16" height="16" /></a>
+                            </label>
+                            <input type="checkbox" name="securesubmit_enable_giftcard" value="1" <?php if(array_key_exists("securesubmit_enable_giftcard", $securesubmit_settings) && $securesubmit_settings['securesubmit_enable_giftcard']){ echo "checked"; }?>>
+                        </li>
                     </ul>
                 </td>
                 <td>
@@ -117,6 +125,14 @@ function event_espresso_display_securesubmit_settings() {
         </h2>
         <p>
             <?php _e('Enter your <a href="https://developer.heartlandpaymentsystems.com/SecureSubmit/Account/" target="_blank">Secret Key</a> here.  If you are testing the SecureSubmit gateway, use your Certification Secret Key, otherwise use your Live Secret Key.', 'event_espresso'); ?>
+        </p>
+    </div>
+    <div id="securesubmit_enable_giftcard" style="display:none">
+        <h2>
+            <?php _e('SecureSubmit Enable Gift Cards', 'event_espresso'); ?>
+        </h2>
+        <p>
+            <?php _e('Check the box to support accepting SecureSubit gift cards.', 'event_espresso'); ?>
         </p>
     </div>
 <?php
