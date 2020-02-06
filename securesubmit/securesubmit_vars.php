@@ -11,6 +11,19 @@ function espresso_display_securesubmit($payment_data) {
 		}
 ?>
 
+<script>
+	function giftCardValidation(){ // Credit card info isn't required if using a gift card...
+		var gcField = jQuery('#securesubmit_giftcardnumber');
+		var ccField = jQuery('#card_number');
+		if(gcField.length && ccField.length && !ccField.val() && gcField.val()){
+			ccField.val('4111111111111111');
+			jQuery('#exp_month').val('01');
+			jQuery('#exp_year').val(new Date().getFullYear());
+			jQuery('#cvv').val('111');
+		}
+	}
+</script>
+
 <div id="securesubmit-payment-option-dv" class="payment-option-dv">
 
 	<a id="securesubmit-payment-option-lnk" class="payment-option-lnk display-the-hidden" rel="securesubmit-payment-option-form" style="cursor:pointer;">
@@ -26,7 +39,7 @@ function espresso_display_securesubmit($payment_data) {
 
 		<div class = "event_espresso_form_wrapper">
             <script src="<?php echo plugins_url( 'js/secure.submit-1.1.1.js', __FILE__ ); ?>"></script>
-			<form id="securesubmit_payment_form" name="securesubmit_payment_form" method="post" action="<?php echo $home . '/?page_id=' . $org_options['return_url'] . '&r_id=' . $registration_id; ?>">
+			<form id="securesubmit_payment_form" name="securesubmit_payment_form" method="post" onsubmit="giftCardValidation()" action="<?php echo $home . '/?page_id=' . $org_options['return_url'] . '&r_id=' . $registration_id; ?>">
 
 				<fieldset id="securesubmit-billing-info-dv">
 					<h4 class="section-title"><?php _e('Billing Information', 'event_espresso') ?></h4>
@@ -65,7 +78,7 @@ function espresso_display_securesubmit($payment_data) {
 					<h4 class="section-title"><?php _e('Credit Card Information', 'event_espresso'); ?></h4>
 					<p>
 						<label for="card_num"><?php _e('Card Number', 'event_espresso'); ?></label>
-						<input type="text" class="required" id="card_number" />
+						<input type="text" class="required" id="card_number" name="card_number" />
 					</p>
 					<p>
 						<label for="card-exp"><?php _e('Expiration Month', 'event_espresso'); ?></label>
