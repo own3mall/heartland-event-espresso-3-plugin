@@ -149,7 +149,7 @@ var hps = (function ($) {
                 e.preventDefault();
 
                 // remove name attributes from sensitive fields
-                $("#card_number").removeAttr("name");
+                // $("#card_number").removeAttr("name"); // Needs to be submitted for proper gift card validation (see tfkcc integration as to why)
                 $("#card_cvc").removeAttr("name");
                 $("#exp_month").removeAttr("name");
                 $("#exp_year").removeAttr("name");
